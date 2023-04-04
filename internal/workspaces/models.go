@@ -5,26 +5,16 @@ type Workspace interface {
 	GetRepoFolders(repoType string) []string
 	GetName() string
 	GetFilePath() string
-	GetConfig() WorkspaceConfig
+	GetConfig() Config
 }
 
-// WorkspaceRepo represents a git repository with its absolute path and remote URL.
-type WorkspaceRepo struct {
-	Name     string `yaml:"name"`
-	Path     string `yaml:"path"`
-	RepoType string `yaml:"type"`
-	Remote   string `yaml:"remote"`
-}
-type WorkspaceConfig struct {
-	Repositories []WorkspaceRepo `yaml:"repositories"`
-}
 type workspace struct {
 	Name     string
 	FilePath string
-	Config   WorkspaceConfig
+	Config   Config
 }
 
-func NewWorkspace(name, path string, config WorkspaceConfig) Workspace {
+func NewWorkspace(name, path string, config Config) Workspace {
 	return &workspace{
 		Name:     name,
 		FilePath: path,
@@ -41,7 +31,7 @@ func (w *workspace) GetRepoFolders(repoType string) []string {
 	}
 
 	var repoFolders []string
-	for _, repo := range w.Config.Repositories {
+	for _, repo := range w.Config.GetRepositories() {
 		if checkRepoType && repo.RepoType == repoType {
 			repoFolders = append(repoFolders, repo.Path)
 		} else {
@@ -62,6 +52,6 @@ func (w *workspace) GetFilePath() string {
 }
 
 // GetConfig() returns the workspace configuration.
-func (w *workspace) GetConfig() WorkspaceConfig {
+func (w *workspace) GetConfig() Config {
 	return w.Config
 }

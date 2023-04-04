@@ -38,15 +38,16 @@ func CreateWorkspace(ctx context.Context, name string, folders []string) error {
 
 	// Convert the slice of repositories to YAML.
 	workspacePath := GetWorkspacePath(name)
-	err = yamlwrapper.WriteYamlFile(workspacePath, repos)
+	workspaceConfig := NewConfig(repos)
+	err = yamlwrapper.WriteYamlFile(workspacePath, workspaceConfig)
 	if err != nil {
 		return err
 	}
 
 	return nil
 }
-func getRepoData(repos []*git.Repository) ([]WorkspaceRepo, error) {
-	var repoData []WorkspaceRepo
+func getRepoData(repos []*git.Repository) ([]Repo, error) {
+	var repoData []Repo
 	for _, repo := range repos {
 		// Get the remote URL of the repository.
 		var remoteUrl string
@@ -63,8 +64,8 @@ func getRepoData(repos []*git.Repository) ([]WorkspaceRepo, error) {
 		}
 		// Add the repository to the slice.
 		name := filewrapper.GetFileNameFromPath(repoPath)
-		repoType := reposervice.DetectRemoteType(repoPath)
-		repoData = append(repoData, WorkspaceRepo{
+		repoType := reposervice.DetectRemoteType(remoteUrl)
+		repoData = append(repoData, Repo{
 			Name:     name,
 			Path:     repoPath,
 			RepoType: repoType,

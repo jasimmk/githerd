@@ -8,7 +8,7 @@ import (
 
 func LoadWorkspace(name string) (Workspace, error) {
 	workspacePath := GetWorkspacePath(name)
-	config := WorkspaceConfig{}
+	config := &config{}
 
 	err := yamlwrapper.ReadYAMLFile(workspacePath, config)
 	if err != nil {
