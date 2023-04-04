@@ -1,0 +1,35 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.o
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go specific
+*.exe
+*.test
+*.prof
+*.pprof
+*.cover
+*.cache
+*.env
+*.log
+
+# IDE specific
+.idea/
+.vscode/
+bin/
+.coverage/
+!.coverage/.gitkeep
