@@ -50,3 +50,25 @@ func AbsPath(path string) (string, error) {
 	}
 	return absPath, nil
 }
+
+// CreateDirIfNotExists If we provide a file name/dir name it creates the specified directory if it does not exist.
+func CreateDirIfNotExists(path string) error {
+	// If the directory already exists, return.
+	path = filepath.Dir(path)
+	if IsDirectory(path) {
+		return nil
+	}
+
+	// Create the directory.
+	err := os.MkdirAll(path, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetFileNameFromPath returns the file name from the specified path.
+func GetFileNameFromPath(path string) string {
+	return filepath.Base(path)
+}

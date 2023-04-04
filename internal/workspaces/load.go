@@ -12,7 +12,7 @@ func LoadWorkspace(name string) (Workspace, error) {
 
 	err := yamlwrapper.ReadYAMLFile(workspacePath, config)
 	if err != nil {
-		return nil, fmt.Errorf("error loading workspace: %s, error: %w", workspacePath, err)
+		return nil, fmt.Errorf("error loading workspace: %s,\nerror: %w", name, err)
 	}
 	workspace := NewWorkspace(name, workspacePath, config)
 	return workspace, nil

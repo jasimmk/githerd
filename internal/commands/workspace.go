@@ -48,7 +48,7 @@ func showWorkSpace(cmd *cobra.Command, args []string) {
 	fmt.Printf("Showing contents of workspace '%s'...\n", workspaceName)
 	workspace, err := workspaces.LoadWorkspace(workspaceName)
 	if err != nil {
-		fmt.Printf("Error loading workspace: %s\n", err)
+		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
 	err = yamlwrapper.PrintYaml(workspace.GetConfig())

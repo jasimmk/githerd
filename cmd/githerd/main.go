@@ -14,7 +14,7 @@ import (
 
 var Version = "v0.0.0"
 var Commit = "000"
-var TagCommit = "000"
+var TagCommit = ""
 
 var workspaceCmd = &cobra.Command{
 	Use:     "workspace",

@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/careem/githerd/internal/gateways/reposervice"
+	"github.com/careem/githerd/pkg/filewrapper"
 	"github.com/careem/githerd/pkg/gitwrapper"
 	"github.com/careem/githerd/pkg/yamlwrapper"
 	"github.com/go-git/go-git/v5"
@@ -47,19 +49,26 @@ func getRepoData(repos []*git.Repository) ([]WorkspaceRepo, error) {
 	var repoData []WorkspaceRepo
 	for _, repo := range repos {
 		// Get the remote URL of the repository.
+		var remoteUrl string
 		remote, err := repo.Remote("origin")
 		if err != nil {
 			return nil, err
 		}
+		remoteUrl = remote.Config().URLs[0]
+
 		// Get the absolute path of the repository.
 		repoPath, err := getRepoPath(repo)
 		if err != nil {
 			return nil, err
 		}
 		// Add the repository to the slice.
+		name := filewrapper.GetFileNameFromPath(repoPath)
+		repoType := reposervice.DetectRemoteType(repoPath)
 		repoData = append(repoData, WorkspaceRepo{
-			Path:   repoPath,
-			Remote: remote.String(),
+			Name:     name,
+			Path:     repoPath,
+			RepoType: repoType,
+			Remote:   remoteUrl,
 		})
 	}
 	return repoData, nil
