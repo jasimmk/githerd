@@ -1,4 +1,4 @@
-package filewrapper
+package file
 
 import (
 	"os"

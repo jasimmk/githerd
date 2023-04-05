@@ -3,14 +3,14 @@ package workspaces
 import (
 	"fmt"
 
-	"github.com/careem/githerd/pkg/yamlwrapper"
+	"github.com/careem/githerd/pkg/yamlapi"
 )
 
 func LoadWorkspace(name string) (Workspace, error) {
 	workspacePath := GetWorkspacePath(name)
 	config := &config{}
 
-	err := yamlwrapper.ReadYAMLFile(workspacePath, config)
+	err := yamlapi.ReadYAMLFile(workspacePath, config)
 	if err != nil {
 		return nil, fmt.Errorf("error loading workspace: %s,\nerror: %w", name, err)
 	}

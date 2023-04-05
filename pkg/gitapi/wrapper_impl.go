@@ -1,4 +1,4 @@
-package gitwrapper
+package gitapi
 
 import (
 	"context"
@@ -16,8 +16,8 @@ type gitWrapper struct {
 	repo *git.Repository
 }
 
-// NewGitWrapper creates a new instance of GitWrapper with the given repository.
-func NewGitWrapper(path string) (GitWrapper, error) {
+// NewGitWrapper creates a new instance of Wrapper with the given repository.
+func NewGitWrapper(path string) (Wrapper, error) {
 	if !IsRepository(path) {
 		return nil, fmt.Errorf("%s not a git repository", path)
 	}
@@ -111,12 +111,12 @@ func (gw *gitWrapper) Push(ctx context.Context, remoteName, branchName string) e
 	return err
 }
 
-func (gw *gitWrapper) RunCommand(ctx context.Context, args ...string) error {
+func (gw *gitWrapper) RunCommand(ctx context.Context, command string, args ...string) error {
 	w, err := gw.repo.Worktree()
 	if err != nil {
 		return err
 	}
-	cmd := exec.Command("git", args...)
+	cmd := exec.Command(command, args...)
 	cmd.Dir = w.Filesystem.Root()
 	fmt.Println(cmd.String())
 	err = cmd.Run()

@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/careem/githerd/internal/constants"
-	"github.com/careem/githerd/pkg/filewrapper"
+	"github.com/careem/githerd/pkg/file"
 )
 
 func GetWorkspacePath(name string) string {
-	path, err := filewrapper.AbsPath(constants.GLOBAL_WORKSPACE_DIR)
+	path, err := file.AbsPath(constants.GLOBAL_WORKSPACE_DIR)
 	if err != nil {
 		return ""
 	}

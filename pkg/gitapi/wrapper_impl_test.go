@@ -1,4 +1,4 @@
-package gitwrapper
+package gitapi
 
 import (
 	"fmt"

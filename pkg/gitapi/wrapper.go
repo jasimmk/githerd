@@ -1,4 +1,4 @@
-package gitwrapper
+package gitapi
 
 import (
 	"context"
@@ -6,14 +6,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/careem/githerd/pkg/filewrapper"
+	"github.com/careem/githerd/pkg/file"
 	"github.com/go-git/go-billy/v5/memfs"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/storage/memory"
 )
 
-type GitWrapper interface {
+type Wrapper interface {
 	// AddRemote adds a remote to the repo.
 	AddRemote(ctx context.Context, remoteName, remoteUrl string) error
 	// Fetch fetches the remote.
@@ -33,7 +33,7 @@ type GitWrapper interface {
 	// Push pushes the given branch to the remote.
 	Push(ctx context.Context, remoteName, branchName string) error
 	// RunCommand runs the given git command.
-	RunCommand(ctx context.Context, args ...string) error
+	RunCommand(ctx context.Context, command string, args ...string) error
 }
 
 func CloneRepository(remoteUrl, localPath, reference string) (*git.Repository, error) {
@@ -98,7 +98,7 @@ func FindRepositories(dirs []string) ([]*git.Repository, error) {
 			return nil, fmt.Errorf("failed to get absolute path of folder %s: %w", folder, err)
 		}
 		// Check if the dir is a directory
-		if !filewrapper.IsDirectory(absPath) {
+		if !file.IsDirectory(absPath) {
 			return nil, fmt.Errorf("folder %s is not a directory", absPath)
 		}
 		// Check if the current dir is a git repository.

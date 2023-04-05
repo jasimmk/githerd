@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/careem/githerd/internal/gateways/reposervice"
-	"github.com/careem/githerd/pkg/filewrapper"
-	"github.com/careem/githerd/pkg/gitwrapper"
-	"github.com/careem/githerd/pkg/yamlwrapper"
+	"github.com/careem/githerd/pkg/file"
+	"github.com/careem/githerd/pkg/gitapi"
+	"github.com/careem/githerd/pkg/yamlapi"
 	"github.com/go-git/go-git/v5"
 )
 
@@ -17,7 +17,7 @@ import (
 func CreateWorkspace(ctx context.Context, name string, folders []string) error {
 	// Create a slice to store the repositories.
 
-	gitRepos, err := gitwrapper.FindRepositories(folders)
+	gitRepos, err := gitapi.FindRepositories(folders)
 	if err != nil {
 		return fmt.Errorf("failed to find git repositories: %w", err)
 	}
@@ -39,7 +39,7 @@ func CreateWorkspace(ctx context.Context, name string, folders []string) error {
 	// Convert the slice of repositories to YAML.
 	workspacePath := GetWorkspacePath(name)
 	workspaceConfig := NewConfig(repos)
-	err = yamlwrapper.WriteYamlFile(workspacePath, workspaceConfig)
+	err = yamlapi.WriteYamlFile(workspacePath, workspaceConfig)
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,7 @@ func getRepoData(repos []*git.Repository) ([]Repo, error) {
 			return nil, err
 		}
 		// Add the repository to the slice.
-		name := filewrapper.GetFileNameFromPath(repoPath)
+		name := file.GetFileNameFromPath(repoPath)
 		repoType := reposervice.DetectRemoteType(remoteUrl)
 		repoData = append(repoData, Repo{
 			Name:     name,

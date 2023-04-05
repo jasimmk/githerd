@@ -5,10 +5,23 @@ import (
 	"os"
 
 	"github.com/careem/githerd/internal/workspaces"
-	"github.com/careem/githerd/pkg/yamlwrapper"
+	"github.com/careem/githerd/pkg/yamlapi"
 	"github.com/spf13/cobra"
 )
 
+var WorkspaceCmd = &cobra.Command{
+	Use:     "workspace",
+	Short:   "manage workspaces in githerd",
+	Long:    "Run workspace operations on git repositories in the workspace. If no workspace is specified, the 'default' workspace is used.",
+	Example: "githerd workspace -w test_workspace init .\ngitherd workspace -w test_workspace show",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
+	},
+}
 var InitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a new workspace",
@@ -51,7 +64,7 @@ func showWorkSpace(cmd *cobra.Command, args []string) {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
-	err = yamlwrapper.PrintYaml(workspace.GetConfig())
+	err = yamlapi.PrintYaml(workspace.GetConfig())
 	if err != nil {
 		fmt.Printf("Error printing workspace: %s\n", err)
 		os.Exit(1)

@@ -1,18 +1,18 @@
-package yamlwrapper
+package yamlapi
 
 import (
 	"fmt"
 	"io/ioutil"
 	"os"
 
-	"github.com/careem/githerd/pkg/filewrapper"
+	"github.com/careem/githerd/pkg/file"
 	"gopkg.in/yaml.v2"
 )
 
 // Write Yaml file
 func WriteYamlFile(filename string, data interface{}) error {
 
-	err := filewrapper.CreateDirIfNotExists(filename)
+	err := file.CreateDirIfNotExists(filename)
 	if err != nil {
 		return err
 	}
