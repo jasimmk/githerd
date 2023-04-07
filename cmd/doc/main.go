@@ -30,12 +30,12 @@ func filePrepender(filename string) string {
 
 func linkHandler(name string) string {
 	base := strings.TrimSuffix(name, path.Ext(name))
-	return "./docs/commands/" + strings.ToLower(base) + "/"
+	return "./" + strings.ToLower(base) + ".md"
 }
 
 func main() {
 
-	err := doc.GenMarkdownTreeCustom(commands.SetupCommands(), "./docs/commands", filePrepender, linkHandler)
+	err := doc.GenMarkdownTreeCustom(commands.SetupCommands(), "./docs/commands/", filePrepender, linkHandler)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,6 +1,13 @@
 # Githerd
 
-An application for managing multiple git-repos at once.
+An application for managing multiple git repositories at once.
+
+## Pre requisit
+
+Below are the pre requisites for using githerd:
+
+- posix shell (sh)
+- `git` binary
 
 ## Installation
 
@@ -14,9 +21,22 @@ go install github.com/jasimmk/githerd/cmd/githerd
 
 ## Commands
 
-All the commands are listed in the [documentation page](./docs/commands/.md).
+All the commands are listed in the [documentation page](./docs/commands/githerd.md).
 
+## Usage
 
+### Create a workspace
+
+```bash
+githerd workspace -w test_workspace init ~/repos
+```
+
+### Run commands in all the repos
+
+```bash
+githerd run -w test_workspace  "git status"
+```
+More commands and details are listed in the [documentation page](./docs/commands/githerd.md).
 
 ## Set config
 
