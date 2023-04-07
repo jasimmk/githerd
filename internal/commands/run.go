@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/careem/githerd/internal/workspaces"
+	"github.com/jasimmk/githerd/internal/workspaces"
 	"github.com/spf13/cobra"
 )
 
-var RunCmd = &cobra.Command{
+var runCmd = &cobra.Command{
 	Use:   "run",
 	Short: "Run bulk execution with arguments in the specified workspace.",
 	Long: `Run bulk execution of Git commands with arguments in the specified workspace.

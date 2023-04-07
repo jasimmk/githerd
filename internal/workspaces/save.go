@@ -1,6 +1,6 @@
 package workspaces
 
-import "github.com/careem/githerd/pkg/yamlapi"
+import "github.com/jasimmk/githerd/pkg/yamlapi"
 
 func Save(name string, workspaceConfig Config) error {
 	workspacePath := GetWorkspacePath(name)

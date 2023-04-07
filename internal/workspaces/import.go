@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/careem/githerd/pkg/execapi"
-	"github.com/careem/githerd/pkg/file"
+	"github.com/jasimmk/githerd/pkg/execapi"
+	"github.com/jasimmk/githerd/pkg/file"
 )
 
 // ImportToWorkspace imports a set of repositories, given a file with list of repositories to a workspace

@@ -1,8 +1,21 @@
 # Githerd
 
-An application for managing multiple git-repos at once. Multiple inspirations are from [git-repo](https://git-repo.info/en/docs/multi-repos/manifest-format/) project
+An application for managing multiple git-repos at once.
 
 ## Installation
+
+There are two ways to install githerd, either from source or from binary. Staight forward way is to download the binary from the [releases](https://github.com/jasimmk/githerd/) page.
+
+### From source
+
+```bash
+go install github.com/jasimmk/githerd/cmd/githerd
+```
+
+## Commands
+
+All the commands are listed in the [documentation page](./docs/commands/.md).
+
 
 
 ## Set config
@@ -23,3 +36,6 @@ profiles:
     ssh_key: <keyfile>
     token: <token>
 ```
+
+Licenses are listed in the [`LICENSE`](LICENSE) file.
+Credits and inspirations are listed in the [`CREDITS`](CREDITS.md) file.

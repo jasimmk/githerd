@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/careem/githerd/internal/workspaces"
-	"github.com/careem/githerd/pkg/yamlapi"
+	"github.com/jasimmk/githerd/internal/workspaces"
+	"github.com/jasimmk/githerd/pkg/yamlapi"
 	"github.com/spf13/cobra"
 )
 
-var WorkspaceCmd = &cobra.Command{
+var workspaceCmd = &cobra.Command{
 	Use:     "workspace",
 	Short:   "manage workspaces in githerd",
 	Long:    "Run workspace operations on git repositories in the workspace. If no workspace is specified, the 'default' workspace is used.",
@@ -22,7 +22,7 @@ var WorkspaceCmd = &cobra.Command{
 
 	},
 }
-var InitCmd = &cobra.Command{
+var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a new workspace",
 	Long: `Initialize a new workspace at the specified directory/directories. It searches for git repositories in the specified directory and adds them to the workspace.
@@ -31,7 +31,7 @@ If no directory is provided, the current directory is used.`,
 	Run:     initWorkSpace,
 }
 
-var ImportCmd = &cobra.Command{
+var importCmd = &cobra.Command{
 	Use:     "import",
 	Short:   "import a set of repositories, given a file with list of repositories to a workspace",
 	Long:    `Clones the repositories specified in file to the directory specified, provided as new line seperated entries. If workspace exists, it adds all the repositories to workspace. If not, it initialize a new workspace at the specified directory`,
@@ -39,7 +39,7 @@ var ImportCmd = &cobra.Command{
 	Run:     importToWorkSpace,
 }
 
-var ShowCmd = &cobra.Command{
+var showCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Show the contents of a workspace",
 	Long: `Show the contents of the specified workspace.
@@ -47,7 +47,7 @@ If no workspace is specified, 'default' workspace is used.`,
 	Example: "githerd workspace -w test_workspace show",
 	Run:     showWorkSpace,
 }
-var DeleteCmd = &cobra.Command{
+var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Deletes workspace",
 	Long: `Delete workspace specifed.

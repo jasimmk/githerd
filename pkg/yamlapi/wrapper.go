@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/careem/githerd/pkg/file"
+	"github.com/jasimmk/githerd/pkg/file"
 	"gopkg.in/yaml.v2"
 )
 

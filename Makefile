@@ -22,4 +22,5 @@ test:
 	go test -v -coverprofile=./.coverage/coverage.out ./...
 	go tool cover -html=./.coverage/coverage.out -o ./.coverage/coverage.html
 
-
+gen-doc:
+	go run ./cmd/doc/main.go

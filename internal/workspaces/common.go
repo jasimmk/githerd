@@ -5,11 +5,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/careem/githerd/internal/constants"
-	"github.com/careem/githerd/internal/gateways/reposervice"
-	"github.com/careem/githerd/pkg/file"
-	"github.com/careem/githerd/pkg/gitapi"
 	"github.com/go-git/go-git/v5"
+	"github.com/jasimmk/githerd/internal/constants"
+	"github.com/jasimmk/githerd/internal/gateways/reposervice"
+	"github.com/jasimmk/githerd/pkg/file"
+	"github.com/jasimmk/githerd/pkg/gitapi"
 )
 
 func GetWorkspacePath(name string) string {

@@ -3,7 +3,7 @@ package workspaces
 import (
 	"fmt"
 
-	"github.com/careem/githerd/pkg/yamlapi"
+	"github.com/jasimmk/githerd/pkg/yamlapi"
 )
 
 func LoadWorkspace(name string) (Workspace, error) {

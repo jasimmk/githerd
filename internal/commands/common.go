@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/careem/githerd/internal/constants"
+	"github.com/jasimmk/githerd/internal/constants"
 	"github.com/spf13/cobra"
 )
 
-var RootCmd = &cobra.Command{
+var rootCmd = &cobra.Command{
+	Use:   "githerd",
 	Short: "A command line tool for bulk execution of Git commands in a workspace",
 	Long: `githerd is a command line tool that allows for bulk execution of Git commands in a workspace.
 	It supports initializing a new workspace, showing the contents of a workspace, and running bulk Git commands with arguments.`,
@@ -24,7 +25,7 @@ var RootCmd = &cobra.Command{
 	},
 }
 
-var VersionCmd = &cobra.Command{
+var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "show version",
 	Long:  "Prints current version of the application",

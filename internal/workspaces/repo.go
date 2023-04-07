@@ -1,6 +1,6 @@
 package workspaces
 
-import "github.com/careem/githerd/pkg/gitapi"
+import "github.com/jasimmk/githerd/pkg/gitapi"
 
 // Repo represents a git repository with its absolute path and remote URL.
 type Repo struct {
