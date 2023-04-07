@@ -111,14 +111,14 @@ func (gw *gitWrapper) Push(ctx context.Context, remoteName, branchName string) e
 	return err
 }
 
-func (gw *gitWrapper) RunCommand(ctx context.Context, command string, args ...string) error {
+func (gw *gitWrapper) RunCommand(ctx context.Context, command string, args []string) ([]byte, error) {
 	w, err := gw.repo.Worktree()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	cmd := exec.Command(command, args...)
 	cmd.Dir = w.Filesystem.Root()
-	fmt.Println(cmd.String())
-	err = cmd.Run()
-	return err
+	fmt.Printf("Command:%s\n", cmd.String())
+	fmt.Printf("cmd:%s, args:%s\n", command, args)
+	return cmd.CombinedOutput()
 }

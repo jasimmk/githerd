@@ -33,7 +33,7 @@ type Wrapper interface {
 	// Push pushes the given branch to the remote.
 	Push(ctx context.Context, remoteName, branchName string) error
 	// RunCommand runs the given git command.
-	RunCommand(ctx context.Context, command string, args ...string) error
+	RunCommand(ctx context.Context, command string, args []string) ([]byte, error)
 }
 
 func CloneRepository(remoteUrl, localPath, reference string) (*git.Repository, error) {

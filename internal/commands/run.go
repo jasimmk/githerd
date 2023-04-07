@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/careem/githerd/internal/workspaces"
 	"github.com/spf13/cobra"
@@ -24,12 +25,34 @@ func runCommand(cmd *cobra.Command, args []string) {
 		cmd.Help()
 		os.Exit(0)
 	}
-	workspaceName, _ := cmd.Parent().Flags().GetString("workspace")
+	workspaceName, _ := cmd.Flags().GetString("workspace")
 	fmt.Printf("Running bulk execution in workspace '%s' with command: %s\n", workspaceName, args)
 	workspace, err := workspaces.LoadWorkspace(workspaceName)
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
+	}
+
+	bulkCmdWithArgs := strings.Join(args[:], " ")
+	bulkCmd := strings.Split(bulkCmdWithArgs, " ")[0]
+	bulkArgs := strings.Split(bulkCmdWithArgs, " ")[1:]
+
+	ctx := cmd.Context()
+	// Run command in each repository
+	for _, repo := range workspace.GetConfig().GetRepositories() {
+
+		fmt.Println(strings.Repeat("=", 120))
+		fmt.Printf("Bulk Run: '%s' (%s)\n", repo.Name, repo.Path)
+		fmt.Println(strings.Repeat("=", 120))
+		gitWrapper, err := repo.GetGitApiWrapper()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s: %s\n", repo.Name, err)
+		}
+		out, err := gitWrapper.RunCommand(ctx, bulkCmd, bulkArgs)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s:%s\n", repo.Name, err)
+		}
+		fmt.Printf("%s", out)
 	}
 
 }
