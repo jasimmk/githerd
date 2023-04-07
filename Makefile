@@ -12,7 +12,8 @@ build:
 	@echo "TagVersion: ${tag_version}"
 	@echo "Building ${project_name}"
 	go build \
-	-ldflags "-X main.Version=${tag_version} -X main.Commit=${commit} -X main.TagCommit=${tag_commit}" -o "./bin/githerd" "./cmd/githerd/main.go"
+		-gcflags -m\
+		-ldflags "-X main.Version=${tag_version} -X main.Commit=${commit} -X main.TagCommit=${tag_commit}" -o "./bin/githerd" "./cmd/githerd/main.go"
 run: build
 	./bin/githerd
 version:
@@ -24,3 +25,8 @@ test:
 
 gen-doc:
 	go run ./cmd/doc/main.go
+
+mem:
+	go tool compile -I ./pkg/ -I ./internal -m cmd/githerd/main.go
+tidy:
+	go mod tidy

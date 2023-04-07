@@ -28,7 +28,7 @@ func main() {
 
 // setVersion sets the version of the application in the context
 func setVersion(ctx context.Context) context.Context {
-	version := Version
+	var version string = Version
 	if version == "" {
 		version = "v0.0.0"
 	}
