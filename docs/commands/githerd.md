@@ -1,5 +1,5 @@
 ---
-date: 2023-04-07T20:48:34+04:00
+date: 2023-04-07T22:45:50+04:00
 title: "githerd"
 slug: githerd
 url: /commands/githerd/
@@ -10,8 +10,8 @@ A command line tool for bulk execution of Git commands in a workspace
 
 ### Synopsis
 
-githerd is a command line tool that allows for bulk execution of Git commands in a workspace.
-	It supports initializing a new workspace, showing the contents of a workspace, and running bulk Git commands with arguments.
+🐏 githerd is a command line tool that allows for bulk execution of Git commands in a workspace.
+	It supports initializing a new workspace, showing the contents of a workspace, and running bulk Git commands with arguments. 💥
 
 ```
 githerd [flags]

@@ -1,5 +1,5 @@
 ---
-date: 2023-04-07T20:48:34+04:00
+date: 2023-04-07T22:45:50+04:00
 title: "githerd run"
 slug: githerd_run
 url: /commands/githerd_run/
