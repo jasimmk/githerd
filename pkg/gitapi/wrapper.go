@@ -37,10 +37,14 @@ type Wrapper interface {
 }
 
 func CloneRepository(remoteUrl, localPath, reference string) (*git.Repository, error) {
-	repo, err := git.PlainClone(localPath, false, &git.CloneOptions{
-		URL:           remoteUrl,
-		ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", reference)),
-	})
+	cloneOptions := &git.CloneOptions{
+		URL: remoteUrl,
+	}
+	if reference != "" {
+		cloneOptions.ReferenceName = plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", reference))
+	}
+	repo, err := git.PlainClone(localPath, false, cloneOptions)
+
 	return repo, err
 }
 

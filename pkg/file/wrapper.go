@@ -1,6 +1,7 @@
 package file
 
 import (
+	"io/ioutil"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -71,4 +72,28 @@ func CreateDirIfNotExists(path string) error {
 // GetFileNameFromPath returns the file name from the specified path.
 func GetFileNameFromPath(path string) string {
 	return filepath.Base(path)
+}
+
+// ReadLines returns the lines of the specified file as string array.
+func ReadLines(filename string, trim bool) ([]string, error) {
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	output := make([]string, 0)
+
+	lines := strings.Split(string(content), "\n")
+	for _, line := range lines {
+		if trim {
+			line = strings.TrimSpace(line)
+		}
+		if line == "" {
+			continue
+		}
+
+		output = append(output, strings.Split(line, ",")...)
+	}
+
+	return output, nil
 }

@@ -31,6 +31,14 @@ If no directory is provided, the current directory is used.`,
 	Run:     initWorkSpace,
 }
 
+var ImportCmd = &cobra.Command{
+	Use:     "import",
+	Short:   "import a set of repositories, given a file with list of repositories to a workspace",
+	Long:    `Clones the repositories specified in file to the directory specified, provided as new line seperated entries. If workspace exists, it adds all the repositories to workspace. If not, it initialize a new workspace at the specified directory`,
+	Example: "githerd workspace -w test_workspace import <filename.txt> <directory> .\n",
+	Run:     importToWorkSpace,
+}
+
 var ShowCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Show the contents of a workspace",
@@ -38,6 +46,14 @@ var ShowCmd = &cobra.Command{
 If no workspace is specified, 'default' workspace is used.`,
 	Example: "githerd workspace -w test_workspace show",
 	Run:     showWorkSpace,
+}
+var DeleteCmd = &cobra.Command{
+	Use:   "delete",
+	Short: "Deletes workspace",
+	Long: `Delete workspace specifed.
+If no workspace is specified, 'default' workspace is used.`,
+	Example: "githerd workspace -w test_workspace delete",
+	Run:     deleteWorkSpace,
 }
 
 // create a new workspace
@@ -67,6 +83,34 @@ func showWorkSpace(cmd *cobra.Command, args []string) {
 	err = yamlapi.PrintYaml(workspace.GetConfig())
 	if err != nil {
 		fmt.Printf("Error printing workspace: %s\n", err)
+		os.Exit(1)
+	}
+}
+
+// importToWorkSpace imports a set of repositories, given a file with list of repositories to a workspace
+func importToWorkSpace(cmd *cobra.Command, args []string) {
+	if len(args) < 2 {
+		fmt.Printf("Error: import requires two arguments, <filename.txt> <directory> .\n")
+		fmt.Println("")
+		cmd.Help()
+		os.Exit(1)
+	}
+	workspaceName, _ := cmd.Parent().Flags().GetString("workspace")
+	fmt.Printf("Importing repositories from file '%s' to workspace '%s'...\n", args[0], workspaceName)
+	err := workspaces.ImportToWorkspace(cmd.Context(), workspaceName, args[0], args[1])
+	if err != nil {
+		fmt.Printf("Error importing to workspace: %s\n", err)
+		os.Exit(1)
+	}
+}
+
+// deletwWorkSpace deletes a workspace
+func deleteWorkSpace(cmd *cobra.Command, args []string) {
+	workspaceName, _ := cmd.Parent().Flags().GetString("workspace")
+	fmt.Printf("Deleting workspace '%s'...\n", workspaceName)
+	err := workspaces.DeleteWorkspace(workspaceName)
+	if err != nil {
+		fmt.Printf("Error deleting workspace: %s\n", err)
 		os.Exit(1)
 	}
 }

@@ -25,15 +25,16 @@ func main() {
 	WorkspaceCmd := commands.WorkspaceCmd
 	initCmd := commands.InitCmd
 	showCmd := commands.ShowCmd
-
-	RunCmd := commands.RunCmd
+	runCmd := commands.RunCmd
+	importCmd := commands.ImportCmd
+	deleteCmd := commands.DeleteCmd
 
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "~/.githerd/config.yaml", "config file")
-	RunCmd.PersistentFlags().StringVarP(&workspace, "workspace", "w", "default", "Specify the workspace to use, By default 'default' workspace is used")
+	runCmd.PersistentFlags().StringVarP(&workspace, "workspace", "w", "default", "Specify the workspace to use, By default 'default' workspace is used")
 	WorkspaceCmd.PersistentFlags().StringVarP(&workspace, "workspace", "w", "default", "Specify the workspace to use, By default 'default' workspace is used")
 	// bulkCmd.PersistentFlags().StringVarP(&workspace, "profile", "p", "default", "Specify the profile to use for the workspace, By default 'default' profile is used")
-	WorkspaceCmd.AddCommand(initCmd, showCmd)
-	rootCmd.AddCommand(WorkspaceCmd, RunCmd, versionCmd)
+	WorkspaceCmd.AddCommand(initCmd, showCmd, importCmd, deleteCmd)
+	rootCmd.AddCommand(WorkspaceCmd, runCmd, versionCmd)
 
 	// reading viper config
 	readConfig(configFile)

@@ -33,9 +33,10 @@ func runCommand(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	bulkCmdWithArgs := strings.Join(args[:], " ")
-	bulkCmd := strings.Split(bulkCmdWithArgs, " ")[0]
-	bulkArgs := strings.Split(bulkCmdWithArgs, " ")[1:]
+	// Ensure that all the arguments are provided as a single string, to properly split it as commands
+	bulkCmdWithArgs := strings.Split(strings.Join(args[:], " "), " ")
+	bulkCmd := bulkCmdWithArgs[0]
+	bulkArgs := bulkCmdWithArgs[1:]
 
 	ctx := cmd.Context()
 	// Run command in each repository
