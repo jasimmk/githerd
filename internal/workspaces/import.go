@@ -3,6 +3,7 @@ package workspaces
 import (
 	"context"
 	"fmt"
+	"sync"
 
 	"github.com/jasimmk/githerd/pkg/execapi"
 	"github.com/jasimmk/githerd/pkg/file"
@@ -30,16 +31,28 @@ func ImportToWorkspace(ctx context.Context, name string, filePath string, dir st
 		return err
 	}
 	// Clone the repositories to the directory
+	/*
+			for _, repoUri := range repoUris {
+			fmt.Println("Cloning repository: ", repoUri)
+			//TODO: Fix with proper configuration
+			// _, err := gitapi.CloneRepository(repoUri, dirPath, "")
+			out, err := execapi.RunShellExec(fmt.Sprintf("git clone %s", repoUri), dirPath)
+			if err != nil {
+				fmt.Printf("Cloning repository:%s failed: %s\nOutput: %s", repoUri, err, out)
+			}
+			fmt.Println(string(out))
+		}
+	*/
+	wg := &sync.WaitGroup{}
+	wg.Add(len(repoUris))
 	for _, repoUri := range repoUris {
 		fmt.Println("Cloning repository: ", repoUri)
 		//TODO: Fix with proper configuration
 		// _, err := gitapi.CloneRepository(repoUri, dirPath, "")
-		out, err := execapi.RunShellExec(fmt.Sprintf("git clone %s", repoUri), dirPath)
-		if err != nil {
-			fmt.Printf("Cloning repository:%s failed: %s\nOutput: %s", repoUri, err, out)
-		}
-		fmt.Println(string(out))
+		command := fmt.Sprintf("git clone %s", repoUri)
+		go execapi.RunShellExec(ctx, wg, command, dirPath)
 	}
+	wg.Wait()
 	UpsertWorkspace(ctx, name, []string{dirPath})
-	return err
+	return nil
 }
